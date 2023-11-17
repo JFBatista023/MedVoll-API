@@ -33,7 +33,7 @@ public class PacienteController {
     public Page<DadosListagemPaciente> listar(@PageableDefault(size = 10, sort = { "nome" }) Pageable paginacao) {
         return pacienteRepository.findAllByAtivoTrue(paginacao).map(DadosListagemPaciente::new);
     }
-''
+
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid DadosAtualizacaoPaciente dados) {
