@@ -13,10 +13,18 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
+    private TokenService tokenService;
+
+    public SecurityFilter(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         var tokenJWT = recuperarToken(request);
+        var subject = tokenService.getSubject(tokenJWT);
+
         filterChain.doFilter(request, response);
     }
 
